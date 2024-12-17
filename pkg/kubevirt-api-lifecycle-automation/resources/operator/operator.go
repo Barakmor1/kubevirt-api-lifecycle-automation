@@ -157,13 +157,13 @@ func CreateKubevirtApiLifecycleAutomation(namespace, machineTypeGlob, targetName
 			Labels:    labels,
 		},
 		Spec: v1.JobSpec{
-			Suspend: boolPtr(true),
+			Suspend: ptr.To(true),
 			Template: corev1.PodTemplateSpec{
 				Spec: corev1.PodSpec{
 					ServiceAccountName:            "kubevirt-api-lifecycle-automation",
 					HostPID:                       true,
-					HostUsers:                     boolPtr(true),
-					TerminationGracePeriodSeconds: int64Ptr(5),
+					HostUsers:                     ptr.To(true),
+					TerminationGracePeriodSeconds: ptr.To(int64(5)),
 					Containers:                    []corev1.Container{container},
 					PriorityClassName:             "system-node-critical",
 					RestartPolicy:                 corev1.RestartPolicyNever,
@@ -174,12 +174,4 @@ func CreateKubevirtApiLifecycleAutomation(namespace, machineTypeGlob, targetName
 	}
 
 	return cj
-}
-
-func boolPtr(b bool) *bool {
-	return &b
-}
-
-func int64Ptr(i int64) *int64 {
-	return &i
 }
